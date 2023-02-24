@@ -1,0 +1,10 @@
+<?php
+require("html2pdf/html2fpdf.php"); 
+$htmlFile = "surveymodule/survey/download.phtml"; 
+$buffer = file_get_contents($htmlFile); 
+
+$pdf = new HTML2FPDF('P', 'mm', 'Legal'); 
+$pdf->AddPage(); 
+$pdf->WriteHTML($buffer); 
+$pdf->Output('my.pdf', 'F'); 
+?>	

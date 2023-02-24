@@ -1,49 +1,9 @@
 <!DOCTYPE html>
 <html lang="zxx" dir="ltr">
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="Author" content="IT Center PTDI" />
-    <meta name="Owner" content="PT Dirgantara Indonesia" />
-    <meta name="keywords"
-        content="customer relation management, customer, support, dirgantara, relation, indonesia, CS, PT. DI" />
-    <meta name="description" content="Customer Support Dirgantara Indonesia" />
-    <title>CUSTOMER RELATION MANAGEMENT DIRGANTARA INDONESIA</title>
+    @include('includes.head')
 
-    <title>@yield('title')</title>
-
-    @include('includes.style')
-</head>
-
-<body>
-    <!-- ======= Top Bar ======= -->
-    <div id="topbar" class="d-none d-xl-flex align-items-center align-items-end fixed-top topbar-transparent">
-        <div class="container d-flex justify-content-end">
-            <div class="social-links">
-                <a href="{{ route('home') }}" class="login"><i class="fa fa-home"></i> Home</a>
-                <a href="gallery" class="login"><i class="fa fa-image"></i> Gallery</a>
-                <a href="footer" class="login"><i class="fa fa-address-book"></i> Contact Us</a>
-
-                <!-- Button trigger modal -->
-                <?php
-                    // if (isset($_SESSION['userid'])) {
-                    // $company = isset($_SESSION["company"]) ? $_SESSION["company"] : '';
-                ?>
-
-                {{-- <a href="logout.php"><i class="fa fa-sign-out"></i> Log Out</a> --}}
-                <?php
-                //} else {
-                ?>
-                <a href="#" class="login" data-toggle="modal" data-target="#exampleModalCenter"><i
-                        class="fa fa-sign-in"></i> Login</a>
-                <!-- <a href="#" class="login" data-toggle="modal" data-target="#frgtpasswd"><i class="fa fa-sign-in"></i> Lupa Password</a>-->
-
-                <?php //   } ?>
-            </div>
-        </div>
-    </div>
+    @include('includes.topbar')
 
     <!-- BEGIN: Main Menu-->
     @include('includes.navbar')
@@ -52,11 +12,41 @@
     <!-- BEGIN: Main Menu-->
     @include('pages.slide')
     <!-- END: Main Menu-->
-
+    <div class="breadcrumb">
+      <div class="container d-flex align-items-center justify-content-between">
+      <ol class="breadcrumb m-0 p-0">
+        </ol>
+        @if(Auth::check())
+        <nav class="navbar navbar-expand-lg p-0">
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                                <a class="nav-link " href="form_order_list">
+		            <i class="fa fa-shopping-cart chart"> <span class="label label-warning" id="jmlorder"></span></i>
+				      </a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ Auth::user()->tmcrmcust->n_cust ?? 'NULL'}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <!--a class="dropdown-item" href="#">Profil</a-->
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="">Change Password</a>
+                  <a  class = "dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                  </form>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        @endif
+      </div>
+</div>
     <!-- BEGIN: Main Menu-->
     @include('pages.intro')
     <!-- END: Main Menu-->
-
+    @include('pages.contact')
     <!-- BEGIN: Main Menu-->
     @include('includes.footer')
     <!-- END: Main Menu-->

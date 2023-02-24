@@ -57,82 +57,37 @@
                         <li>
                             <p>Training</p>
                             <ul>
-                                <?php
-                                    // $limit = "";
-                                    // $filter = "";
-                                    // $order = "id asc";
-                                    // $listtmcustomer_training = getAlltmcustomer_training($filter, $order, $limit);
-                                    // $objtmcustomer_training = new tmcustomer_training();
-                                    // foreach ($listtmcustomer_training as $dat) {
-                                    //     $objtmcustomer_training = unserialize($dat);
-                                    //     $idmro = $objtmcustomer_training->getid();
-                                    //     $limit2 = "";
-                                    //     $filter2 = " where c_training=$idmro";
-                                    //     $order2 = "id asc";
-                                    //     $listtmcust_training_detail = getAlltmcust_training_detail($filter2, $order2, $limit2);
-                                    //     $objtmcust_training_detail = new tmcust_training_detail();
-                                    //     $getn_title = strtolower(str_replace(" ", "-", $objtmcustomer_training->getn_title()));
-                                ?>
-                                <li>
-                                    {{-- <a
-                                        href="<?php //echo BASE_PATH.'training_detail-' . $objtmcustomer_training->getid() . "-" . $getn_title ?>"><?php //echo $objtmcustomer_training->getn_title() ?></a> --}}
-                                </li>
-                                <?php // } ?>
+                            @inject('NavController', 'App\Http\Controllers\NavController')
+                            @foreach($NavController->index() as $train)
+                                <li><a href="/training_detail-{{$train->id}}-{{$train->n_title}}">{{$train -> n_title}}</a></li>
+                            @endforeach
                             </ul>
                         </li>
                         <li>
                             <p>MRO</p>
-                            <?php
-                                // $limit = "";
-                                // $filter = " where f_mro_stat='1'";
-                                // $order = "i_id_mro asc";
-                                // $listtmmro = getAlltmmro($filter, $order, $limit);
-                                // $objtmmro = new tmmro();
-                                // $na = count($listtmmro);
-                                // if ($na != 0) {
-                                //     echo "<ul>\n";
-                                //     foreach ($listtmmro as $dat) {
-                                //         $objtmmro = unserialize($dat);
-                                //         $idmro = $objtmmro->geti_id_mro();
-                                //         $title = trim($objtmmro->getn_mro_title());
-                                //         $titlez=strtolower($title);
-                                //         $titlez=str_replace(" ","-",$titlez);
-
-                                //         $limit2 = "";
-                                //         $filter2 = " where  f_mro_dtlstat='1' and i_id_mro=$idmro";
-                                //         $order2 = "i_id_mrodtl asc";
-                                //         $listtmmrodtl = getAlltmmrodtl($filter2, $order2, $limit2);
-                                //         $objtmmrodtl = new tmmrodtl();
-                                //         $na2 = count($listtmmrodtl);
-
-                                //         if ($na2 == 0) {
-                                //             echo "<li><a href=\"".BASE_PATH."mro-" . $idmro . "-" . $titlez . "\">" . $title . "</a></li>\n";
-                                //         } else {
-                                //             echo "<li><a href=\"#\">" . $title . "</a>\n";
-                                //             echo "  <ul class=\"editable-list\">\n";
-                                //             foreach ($listtmmrodtl as $dat) {
-                                //                 $objtmmrodtl = unserialize($dat);
-                                //                 $idmrodtl=$objtmmrodtl->geti_id_mrodtl();
-                                //                 $titledtl=trim($objtmmrodtl->getn_mro_dtl());
-                                //                 $titledtlz=strtolower($titledtl);
-                                //                 $titledtlz=str_replace(" ","-",$titledtlz);
-                                //                 echo "<li><a href=\"".BASE_PATH."mro_detail-" . $idmrodtl . "-" . $titledtlz . "\">" . $titledtl . "</a></li>\n";
-
-                                //             }
-                                //             echo "  </ul>\n";
-                                //             echo "</li>\n";
-                                //         }
-                                //     }
-                                //     echo "</ul>\n";
-                                // }
-                            ?>
+                            <ul>
+                            @foreach($NavController->index2() as $mro)
+                            @if ($NavController->index3($mro->i_id_mro)->count() > 0)
+                            <li><a href="#">{{$mro -> n_mro_title}}</a>
+                            <ul class="editable-list">
+                            @foreach($NavController->index3($mro->i_id_mro) as $mrodtl)
+                            <li><a href="/mro_detail-{{$mrodtl -> i_id_mrodtl}}-{{$mrodtl -> n_mro_dtl}}">{{$mrodtl -> n_mro_dtl}}</a></li>
+                            @endforeach
+                            </ul>
+                            </li>
+                            @else
+                            <li><a href="/mro-{{$mro->i_id_mro}}-{{$mro->n_mro_title}}">{{$mro -> n_mro_title}}</a></li>
+                            @endif
+                            @endforeach
+                            </ul>
                         </li>
                     </ul>
                 </li>
                 <li><a href="#">Status</a>
                     <ul>
-                        <li><a href="undercons">Fleet</a></li>
-                        <li><a href="undercons">Project</a></li>
+                        <li><a href="fleet">Fleet</a></li>
+                        <li><a href="project">Project</a></li>
+                        <li><a href="management-representative">Management Representative</a></li>
                     </ul>
                 </li>
                 <li><a href="certificate">Certificates</a></li>

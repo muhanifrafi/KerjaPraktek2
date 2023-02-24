@@ -1,15 +1,4 @@
-<main id="main">
-    <div class="breadcrumb">
-        <div class="container d-flex align-items-center justify-content-end">
-            <?php
-                // if (isset($_SESSION['userid'])) {
-                //     $company = isset($_SESSION["company"]) ? $_SESSION["company"] : '';
 
-                //     require("customer_login.php");
-                // }
-            ?>
-        </div>
-    </div>
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
         <div class="container" data-aos="fade-up">

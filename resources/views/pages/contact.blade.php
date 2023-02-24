@@ -1,15 +1,4 @@
-<?php
-include "./x-admin/cmslibs_pg/tmcontactServices/tmcontactServices.php" ;
-include "./x-admin/cmslibs_pg/trcategoryServices/trcategoryServices.php" ;
-include "./x-admin/cmslibs_pg/trcrmcodeServices/trcrmcodeServices.php" ;
-include "api.php";
-$id=1;
 
-
-$dat = findtmcontact($id);
-$objtmcontact=new tmcontact();
-$objtmcontact = unserialize($dat);
-?>
 <script language="javascript">
     $(document).ready(function () {
 
@@ -280,30 +269,13 @@ if (isset($_SESSION['userid'])) {
                                 <select name="refcode" id="refcode" class="form-control width_100">
                                     <!-- <option disabled selected> --- Please Select Your Choise --- </option> -->
                                     <option value=""> --- Please Select Category --- </option>
-                                    <?php
-			 $filter=" where c_code_ref = '5'";
-				$order=" c_code asc";
-				$listtrcrmcode = getAlltrcrmcode($filter,$order);
-				$na=counttrcrmcode($filter);
-				$objtrcrmcode=new trcrmcode();
-            if ($na!=0) {	
-	           foreach ($listtrcrmcode as $dat) {
-		       $objtrcrmcode = unserialize($dat);	
-?>
-
-                                    <option value="<?php echo $objtrcrmcode->getc_code();?>">
-                                        <?php echo $objtrcrmcode->getn_code();?></option>
-
-                                    <?php
-                }
-            }
-?>
-
+                                    @inject('ContactController', 'App\Http\Controllers\ContactController')
+                                    @foreach($ContactController->index() as $contact)
+                                    <option value="{{$contact->c_code}}">
+                                            {{$contact->n_code}}</option>
+                                    @endforeach
                                     <select>
-
                             </div>
-
-
                             <div class="form-group" id="fsubcategory">
                                 <select name="subcategory" id="subcategory" class="form-control width_100">
                                     <!--<select name="category"  multiple="multiple" class="form-control width_100" id="category" data-rule="minlen:4" data-msg="You can select one or more category " >-->
@@ -333,7 +305,7 @@ if (isset($_SESSION['userid'])) {
                             <div class="form-group" id="fcode">
                                 <?php
       // show captcha HTML using Securimage::getCaptchaHtml()
-      require_once 'securimage/securimage.php';
+      require_once 'backend/securimage/securimage.php';
       $options = array();
       $options['input_name']             = 'code'; // change name of input element for form post
       $options['disable_flash_fallback'] = false; // allow flash fallback
@@ -391,7 +363,7 @@ if (isset($_SESSION['userid'])) {
             $.ajax({
                 type: "POST",
                 dataType: "html",
-                url: "module/contact/getRefcode.php",
+                url: "backend/getRefcode.php",
                 data: "Refcode=" + Refcode,
                 success: function (msg) {
                     if (msg == '') {

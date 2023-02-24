@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /statisfaction/
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+php_value upload_max_filesize 20M
+php_value post_max_size 256M
+php_value max_execution_time 6400
+php_value max_input_time 6400
+php_value max_input_vars 20000000000000000

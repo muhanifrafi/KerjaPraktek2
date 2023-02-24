@@ -1,0 +1,129 @@
+<?php
+require_once 'partials/header.phtml';
+require_once "partials/mainjs.phtml";
+
+require_once "service/beranda/Beranda_Services.php";
+$this->beranda_serv = Beranda_Services::getInstance();
+?>
+<body class="theme-red">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper" style="display:block">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="header">
+                <a href="#"><img src="images/logo_cs.png"></a>
+        </div>
+    </nav>
+    <section class="content">
+		<!-- CPU Usage -->
+	<div id="tableview">
+		<div class="row clearfix">			
+			<div class="col-xs-6 col-md-8">
+				<div class="card">
+					<img src="images/utama.png" width="100%"/>                           
+				</div> 
+			</div>
+		
+			<div class="col-xs-6 col-md-4">
+				<div class="box">			
+					<form class="data" action="#" name="frm_identity" id="frm_identity" method="post">
+					<div>
+						<h2 class="line">Basic Information</h2>
+					</div>
+					<div class="input-group">
+						<label>First Name and Surname (Optional)</label>					
+						<div class="form-line">
+							<input required="" class="form-control" placeholder="First name" type="text" id="n_name" name="n_name">
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Rank : </span>
+						<div class="form-line">
+							<input required="" class="form-control" placeholder="Rank" type="text" id="n_rank" name="n_rank">
+						</div>
+					</div>
+					<div class="input-group">
+						<label>Role/Responsibility in your organization : </label>
+						<div class="form-line">
+							<input required="" class="form-control" placeholder="Role/Responsibility in your organization " type="text" id="n_role" name="n_role">
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Institution/Company : </span>
+						<div class="form-line">
+							<input required="" class="form-control" placeholder="Institution/Company" type="text" id="n_company" name="n_company">
+						</div>
+					</div>
+					<div class="input-group">
+						<?php $prod = $this->aircraft; ?>
+						<span class="input-group-addon">Product : </span>
+						<table>
+						  <tr>
+							<td><?php for ($x = 0; $x < count($prod); $x++) { ?>
+								<input id="c_product_<?php echo $x; ?>" name="c_product[]" class="filled-in chk-col-teal" type="checkbox" value="<?php echo $prod[$x]->c_aircraft; ?>">
+								<label for="c_product_<?php echo $x; ?>"><?php echo $prod[$x]->n_aircraft; ?></label>
+								<?php } ?>
+							</td>						
+						  </tr>					  
+						</table>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Country : </span>
+						<div class="form-line">
+							<input required="" class="form-control" placeholder="Country" type="text" id="n_country" name="n_country">
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Date : </span>
+						<div class="demo-masked-input">
+							<div class="form-line">
+								<input required="" class="form-control date" placeholder="Ex: 30/07/2016" type="text" name="d_date" id="d_date">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<a href="#" onClick="exporttodoc();" type="button" class="btn btn-success" >Download Questionnaire  </a>
+						</div>
+						<div class="col-xs-6">
+							<a href="#" onclick="prosesNext1()" style="float:right" type="button" class="btn btn-primary" >Entry Questionnaire  </a>
+						</div>
+					 </div>
+					</form>
+				</div>
+			</div>
+            <!-- #END# CPU Usage -->
+        </div>
+	</div>
+    </section>
+</body>
+</html>

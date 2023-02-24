@@ -1,0 +1,70 @@
+<form action="#" name="frm_identity" id="frm_identity" method="post">
+    <div class="header">
+        <div class="row clearfix">
+            <div class="col-md-12 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">First Name and Surname (Optional)</span>
+                    <div class="form-line">
+                        <input required="" class="form-control" placeholder="First name" type="text" id="n_name" name="n_name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Rank : </span>
+                    <div class="form-line">
+                        <input required="" class="form-control" placeholder="Rank" type="text" id="n_rank" name="n_rank">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Role/Responsibility in your organization : </span>
+                    <div class="form-line">
+                        <input required="" class="form-control" placeholder="Role/Responsibility in your organization " type="text" id="n_role" name="n_role">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Institution/Company : </span>
+                    <div class="form-line">
+                        <input required="" class="form-control" placeholder="Institution/Company" type="text" id="n_company" name="n_company">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <?php $prod = $this->aircraft; ?>
+                    <span class="input-group-addon">Product : </span>
+                    <div class="demo-checkbox">
+                        <?php for ($x = 0; $x < count($prod); $x++) { ?>
+                            <input id="c_product_<?php echo $x; ?>" name="c_product[]" class="filled-in chk-col-teal" type="checkbox" value="<?php echo $prod[$x]->c_aircraft; ?>">
+                            <label for="c_product_<?php echo $x; ?>"><?php echo $prod[$x]->n_aircraft; ?></label> / 
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Country : </span>
+                    <div class="form-line">
+                        <input required="" class="form-control" placeholder="Country" type="text" id="n_country" name="n_country">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">Date : </span>
+                    <div class="demo-masked-input">
+                        <div class="form-line">
+                            <input required="" class="form-control date" placeholder="Ex: 30/07/2016" type="text" name="d_date" id="d_date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="./index" class="btn btn-danger">Cancel</a>
+            <input type="button" onclick="prosesNext1()" class="btn btn-primary" value="Next Part">
+        </div>
+    </div>    
+</form>

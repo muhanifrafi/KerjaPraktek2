@@ -16,6 +16,7 @@
 <link href="{{ url('frontend/assets/css/aircraft-layout.css')}}" rel="stylesheet">
 
 <script src="{{ url('frontend/assets/vendor/jquery/jquery.min.js')}}"></script>
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script-->
 <script src="{{ url('frontend/js/core.js')}}"></script>
 
 <script>

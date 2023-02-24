@@ -1,0 +1,247 @@
+<script  type="text/javascript">
+    function nextQuest(id, id2, id3, id4, displaytr) {
+        for (var x = 0; x < id; x++) {
+            document.getElementById('part_' + x).style.display = "none";
+            document.getElementById('btnNext_' + x).style.display = "none";
+        }
+
+        if (id2 != 0) {
+            var id2before = id2 - 1;
+            document.getElementById('partcat_' + id2before).style.display = "none";
+        }
+
+        for (var x1 = 2; x1 < id4; x1++) {
+            document.getElementById('commentpart_' + x1).style.display = "none";
+        }
+        if (id4 == '60') {
+            document.getElementById('commentpart_' + id4).style.display = "block";
+
+        }
+        if (displaytr == 'block') {
+            document.getElementById('commentpart_' + id4).style.display = displaytr;
+        }
+
+//        if (id3 * 1 != 0) {
+//            var id3before = id3 * 1 - 1;
+//            document.getElementById('partsubcat_' + id3before).style.display = "none";
+//            document.getElementById('partsubcat_' + id3).style.display = "block";
+//        }
+//        if (id4) {
+//            var id4before = id4 * 1 - 1;
+//            if (id4before == '-1') {
+//                document.getElementById('commentpart_' + id4).style.display = "block";
+//            } else {
+//                document.getElementById('commentpart_' + id4before).style.display = "none";
+//                document.getElementById('commentpart_' + id4).style.display = "block";
+//            }
+//        }
+
+        document.getElementById('part_' + id).style.display = "block";
+        document.getElementById('btnNext_' + id).style.display = "block";
+        document.getElementById('partcat_' + id2).style.display = "block";
+    }
+
+
+    function beforeQuest(id, id2, id4) {
+        for (var x = id2 - 1; x > id; x--) {
+            document.getElementById('part_' + x).style.display = "none";
+            document.getElementById('btnNext_' + x).style.display = "none";
+        }
+        document.getElementById('commentpart_' + id4).style.display = "none";
+
+        document.getElementById('part_' + id).style.display = "block";
+        document.getElementById('btnNext_' + id).style.display = "block";
+    }
+
+
+    function open_url_to_div(pageAction) {
+        $.get(pageAction, function(data) {
+            $("#tableview").html(data); 
+			
+            var $demoMaskedInput = $('.demo-masked-input');
+            //Date
+            $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', {placeholder: '__/__/____'});
+
+            //TinyMCE
+            tinymce.init({
+                selector: "textarea",
+                theme: "modern",
+                height: 10,
+                width: 1200,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    'insertdatetime media nonbreaking save table contextmenu directionality',
+                    'emoticons template paste textcolor colorpicker textpattern imagetools'
+                ],
+                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons',
+                image_advtab: true
+            });
+            tinymce.suffix = ".min";
+            tinyMCE.baseURL = 'tinymce';
+        });
+    }
+
+
+    function prosesNext1() {
+        jQuery("#frm_identity").ajaxSubmit(identity_opt);
+    }
+
+    var identity_opt = {
+        target: '#tableview',
+        url: 'surveymodule/survey/formsurvey',
+        beforeSubmit: function() {
+            var n_name = document.getElementById("n_name").value;
+            var n_rank = document.getElementById("n_rank").value;
+            var n_role = document.getElementById("n_role").value;
+            var n_company = document.getElementById("n_company").value;
+            var c_product = $('.filled-in:checked').val();
+            var n_country = document.getElementById("n_country").value;
+            if (!n_name) {
+                alert('Make Sure Your First Name and Surname (Optional) Is Not Null');
+                document.getElementById("n_name").focus();
+                exit();
+            }
+            if (!n_rank) {
+                alert('Make Sure Your Rank Is Not Null');
+                document.getElementById("n_rank").focus();
+                exit();
+            }
+            if (!n_role) {
+                alert('Make Sure Your Role/Responsibility in your organization Is Not Null');
+                document.getElementById("n_role").focus();
+                exit();
+            }
+            if (!n_company) {
+                alert('Make Sure Your Institution/Company Is Not Null');
+                document.getElementById("n_company").focus();
+                exit();
+            }
+            if (!c_product) {
+                alert('Make Sure Choose Product One Of Products');
+                document.getElementsByName("c_product").focus();
+                exit();
+            }
+            if (!n_country) {
+                alert('Make Sure Your Country Is Not Null');
+                document.getElementById("n_country").focus();
+                exit();
+            }
+
+        },
+        success: function() {
+            //TinyMCE
+            tinymce.init({
+                selector: "textarea",
+                theme: "modern",
+                height: 10,
+                width: 1200,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    'insertdatetime media nonbreaking save table contextmenu directionality',
+                    'emoticons template paste textcolor colorpicker textpattern imagetools'
+                ],
+                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons',
+                image_advtab: true
+            });
+            tinymce.suffix = ".min";
+            tinyMCE.baseURL = 'tinymce';
+            document.getElementById('part_0').style.display = "block";
+            document.getElementById('btnNext_0').style.display = "block";
+            document.getElementById('partcat_0').style.display = "block";
+        },
+        type: 'post',
+        resetForm: false
+    };
+    function prosesSimpan() {
+        tinyMCE.triggerSave();
+        jQuery("#frm_survey").ajaxSubmit(simpan_opt);
+    }
+
+    var simpan_opt = {
+        target: '#hasil',
+        url: '<?php echo $this->basePath; ?>/surveymodule/survey/simpansurvey',
+        beforeSubmit: function() {
+            var n_name = document.getElementById("n_name").value;
+            var n_rank = document.getElementById("n_rank").value;
+            var n_role = document.getElementById("n_role").value;
+            var n_company = document.getElementById("n_company").value;
+            var c_product = $('.filled-in:checked').val();
+            var n_country = document.getElementById("n_country").value;
+            var jml = document.getElementById("jmldata").value;
+            if (!n_name) {
+                alert('Make Sure Your First Name and Surname (Optional) Is Not Null');
+                document.getElementById("n_name").focus();
+                exit();
+            }
+            if (!n_rank) {
+                alert('Make Sure Your Rank Is Not Null');
+                document.getElementById("n_rank").focus();
+                exit();
+            }
+            if (!n_role) {
+                alert('Make Sure Your Role/Responsibility in your organization Is Not Null');
+                document.getElementById("n_role").focus();
+                exit();
+            }
+            if (!n_company) {
+                alert('Make Sure Your Institution/Company Is Not Null');
+                document.getElementById("n_company").focus();
+                exit();
+            }
+            // if (!c_product) {
+            //     alert('Make Sure Choose Product One Of Products');
+            //     document.getElementsByName("c_product").focus();
+            //     exit();
+            // }
+            if (!n_country) {
+                alert('Make Sure Your Country Is Not Null');
+                document.getElementById("n_country").focus();
+                exit();
+            }
+
+            for (var x = 0; x < jml * 1; x++) {
+                var a = document.getElementsByName('respon_' + x);
+                var ischecked_method = false;
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].checked) {
+                        ischecked_method = true;
+                        break;
+                    }
+                }
+                if (!ischecked_method) {
+                    alert('Make Sure, Survey Is Not Completed!');
+                    a[i].focus();
+                    exit();
+                }
+            }
+
+        },
+        success: function() {
+            location.reload(true);
+            window.location.href = 'http://<?php echo $_SERVER['SERVER_NAME']; ?>/';
+        },
+        type: 'post',
+        resetForm: false
+    };
+
+
+    function exporttodoc() {
+        var url = 'surveymodule/survey/download';	
+        windowOpens(url);
+    }
+
+    function windowOpens(url) {
+        var w = 0;
+        var h = 0;
+        w = screen.availWidth;
+        h = screen.availHeight;
+        var popW = 800, popH = 500;
+        var leftc = (w - popW) / 2;
+        var topc = (h - popH) / 2;
+        var selectWindow = window.open(url, 'Selection', 'left=' + leftc + ',top=' + topc + ', width=' + popW + ',height=' + popH + ',resizable=0,scrollbars=yes')
+    }
+</script>

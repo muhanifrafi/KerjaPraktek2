@@ -170,8 +170,7 @@ function goSearchAdam(m) {
   //alert "test";
   var s = document.searchform.s.value;
   var idcust = document.searchform.idcust.value;
-  var saring = document.searchform.saring.value;
-  var pg = m + ".php?s=" + s + "&idcust=" + idcust + "&saring=" + saring;
+  var pg = m + "?s=" + s + "&idcust=" + idcust;
   //alert (pg);
   //alert(pg);
   $().ajaxStart(function () {
@@ -189,7 +188,7 @@ function goSearchAdam(m) {
 
 function goSearchTypeAC(m, idcust, typeac) {
   //alert (typeac);
-  var pg = m + ".php?idcust=" + idcust + "&typeac=" + typeac;
+  var pg = m + "?idcust=" + idcust + "&typeac=" + typeac;
   //alert (pg);
   //alert(pg);
   $().ajaxStart(function () {

@@ -1,0 +1,260 @@
+<?php
+require_once 'partials/header.phtml';
+require_once "partials/mainjs.phtml";
+
+require_once "service/beranda/Beranda_Services.php";
+$this->beranda_serv = Beranda_Services::getInstance();
+?>
+<body class="theme-red">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper" style="display:block">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Customer Statisfaction Survey</a>
+            </div>
+        </div>
+    </nav>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- CPU Usage -->
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div id="tableview">
+                            <img src="images/utama.png" width="100%"/>
+                            <!--a href="#" onClick="open_url_to_div('surveymodule/survey/identity')" style="margin-left:94%" type="button" class="btn btn-primary" >Next Part </a-->
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <!-- #END# CPU Usage -->
+        </div>
+    </section>
+
+
+
+
+    <form action="#" name="frm_survey" id="frm_survey" method="post">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="header">
+                                <div class="row clearfix">
+                                    <div class="col-md-12 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">First Name and Surname (Optional)</span>
+                                            <div class="form-line">
+                                                <input class="form-control" placeholder="First name" type="text" id="n_name" name="n_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Rank : </span>
+                                            <div class="form-line">
+                                                <input class="form-control" placeholder="Rank" type="text" id="n_rank" name="n_rank">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Role/Responsibility in your organization : </span>
+                                            <div class="form-line">
+                                                <input class="form-control" placeholder="Role/Responsibility in your organization " type="text" id="n_role" name="n_role">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Institution/Company : </span>
+                                            <div class="form-line">
+                                                <input class="form-control" placeholder="Institution/Company" type="text" id="n_company" name="n_company">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <?php $prod = array('C212,CN235,C295', 'MRTT', 'A400M', 'other'); ?>
+                                            <span class="input-group-addon">Product : </span>
+                                            <div class="demo-checkbox">
+                                                <?php for ($x = 0; $x < count($prod); $x++) { ?>
+                                                    <input id="c_product_<?php echo $x; ?>" name="c_product[]" class="filled-in chk-col-teal" type="checkbox" value="<?php echo $prod[$x]; ?>">
+                                                    <label for="c_product_<?php echo $x; ?>"><?php echo $prod[$x]; ?></label> / 
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Country : </span>
+                                            <div class="form-line">
+                                                <input class="form-control" placeholder="Country" type="text" id="n_country" name="n_country">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Date : </span>
+                                            <div class="demo-masked-input">
+                                                <div class="form-line">
+                                                    <input class="form-control date" placeholder="Ex: 30/07/2016" type="text" name="d_date" id="d_date">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12 col-sm-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Please mark with X the response (1 lowest, 10 highest) <button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                                                    <i class="material-icons">clear</i>
+                                                </button> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <div class="body table-responsive row">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <?php
+                                            $b = 0;
+
+                                            for ($a = 0; $a < count($this->arrtrsurvcat); $a++) {
+                                                ?>
+                                                <tr>
+                                                    <th scope="row" colspan="14" bgcolor="#d4d4d4"> 
+
+                                                        <?php echo $this->arrtrsurvcat[$a]->n_category; ?>
+                                                        <input type="hidden" name="i_survcat2_<?php echo $a; ?>" id="i_survcat2_<?php echo $a; ?>" value="<?php echo $this->arrtrsurvcat[$a]->i_survcat; ?>">
+                                                    </th>
+                                                </tr>
+                                                <?php
+                                                for ($x = 0; $x < count($this->arrtrsurvquest); $x++) {
+                                                    $i_survquest = $this->arrtrsurvquest[$x]->i_survquest;
+                                                    $x1 = $x + 1;
+
+                                                    $arrtrsurvrespon = $this->beranda_serv->arrtrsurvrespon($x1);
+
+                                                    if ($this->arrtrsurvcat[$a]->i_survcat == $this->arrtrsurvquest[$x]->i_survcat) {
+                                                        if ($this->arrtrsurvquest[$x]->i_survcat . $this->arrtrsurvquest[$x]->i_survsubcat == $this->arrtrsurvsubcat[$b]->i_survcat . $this->arrtrsurvsubcat[$b]->i_survsubcat) {
+                                                            ?>
+                                                            <tr>
+                                                                <?php ?>
+                                                                <th scope="row" colspan="14" bgcolor="#ccd6d6"> <?php echo $this->arrtrsurvsubcat[$b]->n_subcategory; ?></th>
+                                                            </tr>
+                                                            <?php
+                                                            $b = $b + 1;
+                                                        }
+                                                        ?>
+                                                        <tr>
+                                                            <th scope="row" width="30%"> <?php echo $x + 1 . ' . ' . $this->arrtrsurvquest[$x]->n_question; ?>
+
+                                                                <input type="hidden" name="idquest_<?php echo $x; ?>" id="idquest_<?php echo $x; ?>" value="<?php echo $i_survquest; ?>">
+                                                                <input type="hidden" name="i_survcat_<?php echo $x; ?>" id="i_survcat_<?php echo $x; ?>" value="<?php echo $this->arrtrsurvquest[$x]->i_survcat; ?>">
+                                                            </th>
+
+                                                            <?php for ($y = 0; $y < count($arrtrsurvrespon); $y++) { ?>
+                                                                <td>
+                                                                    <table class="table table-bordered">
+                                                                        <?php if ($arrtrsurvrespon[$y]->q_respon != 0) { ?>
+                                                                            <tr>
+                                                                                <?php
+                                                                                $y1 = $y + 1;
+                                                                                if ($arrtrsurvrespon[$y]->n_respon == $arrtrsurvrespon[$y1]->n_respon) {
+                                                                                    ?>
+                                                                                    <td colspan="2" width="2%"> <?php echo $arrtrsurvrespon[$y]->n_respon; ?></td>
+                                                                                <?php } ?>
+                                                                            </tr>
+                                                                            <?php if ($y % 2 == 0) { ?>
+                                                                                <tr>
+                                                                                    <?php for ($y2 = $y; $y2 < $y + 2; $y2++) {
+                                                                                        ?>
+                                                                                        <td width="2%"> <?php echo $arrtrsurvrespon[$y2]->q_respon . '<br/>'; ?></td>
+                                                                                    <?php } ?>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <?php for ($y3 = $y; $y3 < $y + 2; $y3++) { ?>
+                                                                                        <td width="2%"> 
+                                                                                            <input name="respon_<?php echo $x; ?>" id="respon_<?php echo $x; ?>" type="radio" value="<?php echo $arrtrsurvrespon[$y3]->q_respon; ?>">
+                                                                                        </td>
+                                                                                    <?php } ?>
+                                                                                </tr>
+                                                                            <?php } ?>
+                                                                        <?php }if ($arrtrsurvrespon[$y]->q_respon == 0) { ?>
+                                                                            <tr>
+                                                                                <td> <?php echo $arrtrsurvrespon[$y]->n_respon; ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td> <?php echo $arrtrsurvrespon[$y]->q_respon; ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <input name="respon_<?php echo $x; ?>" id="respon_<?php echo $x; ?>" type="radio" value="<?php echo $arrtrsurvrespon[$y]->q_respon; ?>">
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php } ?>
+                                                                    </table>
+                                                                </td>
+                                                            <?php } ?>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                                <tr>
+                                                    <th scope="row" colspan="14"> 
+                                                        Comments : 
+                                                        <textarea id="comment_<?php echo $a; ?>" name="comment[]">   </textarea>
+                                                    </th>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" id="jmldata" name="jmldata" value="<?php echo count($this->arrtrsurvquest); ?>">
+                                    <input type="button" onclick="prosesSimpan()" id="buttonSimpan" class="btn btn-primary" value="Simpan">
+                                    <div id="hasil"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</body>
+
+</body>
+</html>

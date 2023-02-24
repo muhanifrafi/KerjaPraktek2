@@ -1,0 +1,52 @@
+<style>
+	.contoh {list-style-type:none;}
+	
+
+#loading {
+	height:50px;
+	left:40%;
+	position:absolute;
+	top:30%;
+	bottom:0;
+	visibility:visible;
+	width:222px;
+	z-index:1000;
+	padding:0;
+	text-align:left;
+	background-color:#FAFAFA;
+	border:1px solid #ddd;
+    background: -webkit-gradient(linear, center top, center bottom, from(#FFF), to(#FFFF));
+	font-family: "Arial", helvetica; 
+	font-size: 18px; 
+	font-weight:bold;
+	text-align: center;
+	}
+#loading .image {
+	float:center;
+	margin:0;
+	text-align:left;
+	}
+#loading .load {
+	float:center;
+	margin:0;
+	font-size:12px;
+	line-height:13px;
+	text-align:left;
+	margin-left:10px;
+	font-family:Arial,Verdana, Tahoma,  Helvetica, sans-serif;
+	color:#333;
+	}	
+</style>
+<script>
+var $loading = $('#loading').hide();
+$(document)
+  .ajaxStart(function () {
+	$loading.show();
+  })
+  .ajaxStop(function () {
+	$loading.hide();
+  });
+</script>
+<div id="loading">
+  <img id="loading-image" src="img/flight-loader2.gif" alt="Loading..." />
+</div>

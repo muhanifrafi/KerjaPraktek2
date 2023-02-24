@@ -1,0 +1,185 @@
+<?php
+require_once "service/beranda/Beranda_Services.php";
+$this->beranda_serv = Beranda_Services::getInstance();
+?>
+
+<style>
+    input[type="checkbox"][readonly] {
+        pointer-events: none;
+    }
+</style>
+    <nav class="navbar">
+        <div class="header">
+            <a href="#"><img src="images/logo_cs.png"></a>
+        </div>
+    </nav>
+<form action="#" name="frm_survey" id="frm_survey" method="post">
+	<div class="row clearfix">
+		<input class="form-control" value="<?php echo $this->n_name; ?>" readonly="true" placeholder="First name" type="hidden" id="n_name" name="n_name">
+		<input class="form-control" value="<?php echo $this->n_rank; ?>" readonly="true" placeholder="Rank" type="hidden" id="n_rank" name="n_rank">
+		<input class="form-control" value="<?php echo $this->n_role; ?>" readonly="true" placeholder="Role/Responsibility in your organization " type="hidden" id="n_role" name="n_role">
+		<input class="form-control" value="<?php echo $this->n_company; ?>" readonly="true" placeholder="Institution/Company" type="hidden" id="n_company" name="n_company">
+		
+        <?php $prod = $this->c_product; ?>
+			<?php for ($x = 0; $x < count($prod); $x++) { ?>
+				<input type="hidden" id="c_product_<?php echo $x; ?>" name="c_product" class="filled-in chk-col-teal"  value="<?php echo $prod[$x]; ?>">
+			<?php } ?>
+				
+		<input class="form-control" value="<?php echo $this->n_country; ?>" readonly="true" placeholder="Country" type="hidden" id="n_country" name="n_country">
+		<input class="form-control date" value="<?php echo $this->d_date; ?>" readonly="true" placeholder="Ex: 30/07/2016" type="hidden" name="d_date" id="d_date">
+				  
+		<div class="col-md-6 col-xs-12 col-sm-6">
+			<div class="input-group">
+				<span class="input-group-addon">Hello, <font color="blue"><?php echo $this->n_name; ?> </font>.  Please select the response (1 lowest, 10 highest) 
+				</span>
+			</div>
+		</div>
+	</div>
+   
+    <div class="body">
+        <div class="body table-responsive row">
+            <table class="table table-striped">
+                <tbody>
+                    <?php
+                    $b = 0;
+                    $jml = 0;
+                    $b1 = -1;
+                    $display = 'none';
+                    for ($a = 0; $a < count($this->arrtrsurvcat); $a++) {
+                        ?>
+                        <tr id="partcat_<?php echo $a; ?>" style="display:none">
+                            <th scope="row" colspan="14" bgcolor="#d4d4d4">
+                                <?php echo $this->arrtrsurvcat[$a]->n_category; ?>
+                                <input type="hidden" name="i_survcat2_<?php echo $a; ?>" id="i_survcat2_<?php echo $a; ?>" value="<?php echo $this->arrtrsurvcat[$a]->i_survcat; ?>">
+                            </th>
+                        </tr>
+                        <?php
+                        $jmlQuest = $this->beranda_serv->arrjmlquest($a + 1);
+                        $arrcount[$a] = count($jmlQuest);
+                        $jml = $jml + $arrcount[$a];
+                        for ($x = 0; $x < count($this->arrtrsurvquest); $x++) {
+                            $i_survquest = $this->arrtrsurvquest[$x]->i_survquest;
+                            $x1 = $x + 1;
+
+                            $arrtrsurvrespon = $this->beranda_serv->arrtrsurvrespon($x1);
+
+                            if ($this->arrtrsurvcat[$a]->i_survcat == $this->arrtrsurvquest[$x]->i_survcat) {
+                                if ($this->arrtrsurvquest[$x]->i_survcat . $this->arrtrsurvquest[$x]->i_survsubcat == $this->arrtrsurvsubcat[$b]->i_survcat . $this->arrtrsurvsubcat[$b]->i_survsubcat) {
+                                    ?>
+                                    <tr id="partsubcat_<?php echo $b; ?>" style="display:none">
+                                        <?php ?>
+                                        <th scope="row" colspan="14" bgcolor="#ccd6d6"> <?php echo $this->arrtrsurvsubcat[$b]->n_subcategory; ?></th>
+                                    </tr>
+                                    <?php
+                                    $b = $b + 1;
+                                }
+                                ?>
+                                <tr id="part_<?php echo $x; ?>" style="display:none">
+                                    <th scope="row" width="30%"> <?php echo $x + 1 . ' . ' . $this->arrtrsurvquest[$x]->n_question; ?>
+
+                                        <input type="hidden" name="idquest_<?php echo $x; ?>" id="idquest_<?php echo $x; ?>" value="<?php echo $i_survquest; ?>">
+                                        <input type="hidden" name="i_survcat_<?php echo $x; ?>" id="i_survcat_<?php echo $x; ?>" value="<?php echo $this->arrtrsurvquest[$x]->i_survcat; ?>">
+                                    </th>
+
+                                    <?php for ($y = 0; $y < count($arrtrsurvrespon); $y++) { ?>
+                                        <td>
+                                            <table class="table table-bordered">
+                                                <?php if ($arrtrsurvrespon[$y]->q_respon != 0) { ?>
+                                                    <tr>
+                                                        <?php
+                                                        $y1 = $y + 1;
+                                                        if ($arrtrsurvrespon[$y]->n_respon == $arrtrsurvrespon[$y1]->n_respon) {
+                                                            ?>
+                                                            <td colspan="2" width="2%"> <?php echo $arrtrsurvrespon[$y]->n_respon; ?></td>
+                                                        <?php } ?>
+                                                    </tr>
+                                                    <?php if ($y % 2 == 0) { ?>
+                                                        <tr>
+                                                            <?php for ($y2 = $y; $y2 < $y + 2; $y2++) {
+                                                                ?>
+                                                                <td width="2%"> <?php echo $arrtrsurvrespon[$y2]->q_respon . '<br/>'; ?></td>
+                                                            <?php } ?>
+                                                        </tr>
+                                                        <tr>
+                                                            <?php for ($y3 = $y; $y3 < $y + 2; $y3++) { ?>
+                                                                <td width="2%"> 
+                                                                    <input name="respon_<?php echo $x; ?>" id="respon_<?php echo $x; ?>" type="radio" value="<?php echo $arrtrsurvrespon[$y3]->q_respon; ?>">
+                                                                </td>
+                                                            <?php } ?>
+                                                        </tr>
+                                                    <?php } ?>
+                                                <?php }if ($arrtrsurvrespon[$y]->q_respon == 0) { ?>
+                                                    <tr>
+                                                        <td> <?php echo $arrtrsurvrespon[$y]->n_respon; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> <?php echo $arrtrsurvrespon[$y]->q_respon; ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input name="respon_<?php echo $x; ?>" id="respon_<?php echo $x; ?>" type="radio" value="<?php echo $arrtrsurvrespon[$y]->q_respon; ?>">
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </table>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
+
+                                <?php
+                                if (trim($x1 + 1) == trim($jml * 1 + 1)) {
+                                    $display = 'block';
+                                } else {
+                                    $display = 'none';
+                                }
+                                if ($x + 1 == 1) {
+                                    $displaybtn = "none";
+                                } else {
+                                    $displaybtn = "block";
+                                }
+                                
+                                if ($x == (count($this->arrtrsurvquest)-1)) {
+                                    $displaybtn2 = "none";
+                                } else {
+                                    $displaybtn2 = "block";
+                                }
+                                ?>
+                                <tr id="btnNext_<?php echo $x; ?>" style="display:none">                                    
+                                    <th>   
+                                        <input type="button" style="display:<?php echo $displaybtn; ?>" onclick="beforeQuest('<?php echo $x - 1; ?>', '<?php echo $x + 1; ?>', '<?php echo $x + 1; ?>')" class="btn btn-warning" value="Back Question">  
+                                    </th>                           
+                                    <th>
+                                        <input type="button" style="display:<?php echo $displaybtn2; ?>" onclick="nextQuest('<?php echo $x + 1; ?>', '<?php echo $a; ?>', '<?php echo $b; ?>', '<?php echo $x + 2; ?>', '<?php echo $display; ?>')" class="btn btn-success" value="Next Question">  
+                                    </th>                           
+                                    <th>  
+                                        <a href="./index" class="btn btn-danger">Cancel</a>  
+                                    </th> 
+                                    <th>
+                                        <input type="button" onclick="prosesSimpan()" id="buttonSimpan" class="btn btn-primary" value="Finish"> 
+                                    </th> 
+                                </tr>
+
+
+                                <tr id="commentpart_<?php echo $x + 2; ?>" style="display:none">
+                                    <th scope="row" colspan="14"> 
+                                        Comments : 
+                                        <textarea id="comment_<?php echo $a; ?>" name="comment[]">   </textarea>
+                                    </th>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <div  id="btnNext_<?php echo count($this->arrtrsurvquest); ?>" style="display:none">
+                <input type="hidden" id="jmldata" name="jmldata" value="<?php echo count($this->arrtrsurvquest); ?>">
+            </div>
+            <div id="hasil"></div>
+        </div>
+
+    </div>
+</form>
